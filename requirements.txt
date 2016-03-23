@@ -1,0 +1,22 @@
+
+# https://www.python.org/download/releases/2.7/
+Python-2.7.msi
+
+# https://www.microsoft.com/en-us/download/details.aspx?id=44266
+VCForPython27.msi
+
+# https://pip.pypa.io/en/latest/installing/
+# https://raw.githubusercontent.com/pypa/pip/master/contrib/get-pip.py
+get-pip.py
+
+# EXE FILES
+py2exe-0.6.9.win32-py2.7.exe
+msvcp90.dll
+
+PIL-1.1.7.win32-py2.7.exe
+pywin32-220.win32-py2.7.exe
+
+# WHL FILES
+pyHook-1.5.1-cp27-none-win32.whl
+pywin32-220-cp27-none-win32.whl
+requests-2.7.0-py2.py3-none-any.whl
