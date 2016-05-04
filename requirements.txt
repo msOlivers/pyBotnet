@@ -10,6 +10,8 @@ VCForPython27.msi
 get-pip.py
 
 # EXE FILES
+pywin32-220.win32-py2.7.exe
+
 py2exe-0.6.9.win32-py2.7.exe
 msvcp90.dll
 
@@ -20,3 +22,4 @@ pywin32-220.win32-py2.7.exe
 pyHook-1.5.1-cp27-none-win32.whl
 pywin32-220-cp27-none-win32.whl
 requests-2.7.0-py2.py3-none-any.whl
+
