@@ -1,0 +1,25 @@
+import sys
+import os
+import socket
+import platform
+import random
+import glob
+import re
+from urllib import urlopen
+python get-pip.py
+import requests 			Requerido requests-2.7.0-py2.py3-none-any.whl setup: pip install requests-2.7.0-py2.py3-none-any.whl
+import urllib,urllib2
+import subprocess
+import Image, ImageGrab		Requerido PIL-1.1.7.win32-py2.7.exe
+import time
+import datetime
+import shutil
+from _winreg import *
+import win32com.client			Requerido pywin32-220.win32-py2.7
+import pythoncom
+import pyHook				Requerido pyHook-1.5.1-cp27-none-win32.whlsetup:pip install pyHook-1.5.1-cp27-none-win32.whl
+import win32api
+import win32gui
+import win32con
+from threading import Timer
+from threading import Thread
